@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.login_next_text_view)?.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
-            // Clear this activity from the back stack
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
             finish() // Ensure this activity is removed from the stack
         }
