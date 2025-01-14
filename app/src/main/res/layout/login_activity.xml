@@ -76,9 +76,11 @@
         app:endIconDrawable="@drawable/mail">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
+            android:inputType="text"
             android:textSize="17sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -97,6 +99,7 @@
         app:endIconDrawable="@drawable/lock">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"

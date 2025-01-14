@@ -7,21 +7,21 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var credentialsManager: CredentialsManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.registration_activity)
+        setContentView(R.layout.login_activity)
 
         credentialsManager = CredentialsManager(this)
 
         val emailEditText = findViewById<EditText>(R.id.email_text)
         val passwordEditText = findViewById<EditText>(R.id.password_text)
-        val registerButton = findViewById<Button>(R.id.nextButton)
+        val loginButton = findViewById<Button>(R.id.nextButton)
 
-        registerButton.setOnClickListener {
+        loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
@@ -30,18 +30,19 @@ class MainActivity : AppCompatActivity() {
             } else if (!CredentialsManager.isValidPassword(password)) {
                 passwordEditText.error = "Password must be at least 8 characters, with an uppercase letter and a digit"
             } else {
-                if (credentialsManager.registerAccount(email, password)) {
-                    val intent = Intent(this, LoginActivity::class.java)
+                // Validate login credentials
+                if (credentialsManager.isValidLogin(email, password)) {
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    emailEditText.error = "Email already registered"
+                    passwordEditText.error = "Incorrect credentials"
                 }
             }
         }
 
-        findViewById<TextView>(R.id.login_next_text_view).setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+        findViewById<TextView>(R.id.register_now_text_view).setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
