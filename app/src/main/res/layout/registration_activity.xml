@@ -97,10 +97,11 @@
         app:endIconDrawable="@drawable/mail">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:textSize="17sp"
             />
 
@@ -119,10 +120,11 @@
         app:endIconDrawable="@drawable/smartphone">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
-            android:inputType="textPassword"
+            android:inputType="phone"
             android:textSize="17sp"
             />
 
@@ -141,6 +143,7 @@
         app:endIconDrawable="@drawable/lock">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_regular"
