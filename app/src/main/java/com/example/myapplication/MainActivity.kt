@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
                 !CredentialsManager.isValidPassword(password) -> {
                     passwordEditText.error = "Password must be at least 8 characters, with an uppercase letter and a digit"
                 }
+                !credentialsManager.isEmailAvailable(email) -> {
+                    emailEditText.error = "Email already registered"
+                }
                 credentialsManager.registerAccount(email, password) -> {
                     // Successful registration
                     startActivity(Intent(this, LoginActivity::class.java))
