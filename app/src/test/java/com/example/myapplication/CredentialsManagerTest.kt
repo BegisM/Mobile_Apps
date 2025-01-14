@@ -1,10 +1,21 @@
 package com.example.myapplication
 
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
+import android.content.Context
+import org.mockito.Mock
+import org.mockito.MockitoAnnotations
 
 class CredentialsManagerTest {
-
+    private lateinit var credentialsManager: CredentialsManager
+    @Mock
+    private lateinit var mockContext: Context
+    @Before
+    fun setUp() {
+        MockitoAnnotations.openMocks(this)  // Initialize the mock
+        credentialsManager = CredentialsManager(mockContext)
+    }
     @Test
     fun testEmptyEmail() {
         val email = ""
@@ -34,6 +45,13 @@ class CredentialsManagerTest {
         val password = "securePass123"
         assertTrue(CredentialsManager.isValidPassword(password)) // Filled password with valid length
     }
+
+    @Test
+    fun `login with test@te,st and 1234 succeeds`() {
+        credentialsManager.registerAccount("test@te.st", "1234")
+        assertTrue("Login should succeed with test@te.st and 1234", credentialsManager.isValidLogin("test@te.st", "1234"))
+    }
+
 
 //    // Additional test cases for registration and login scenarios
 //    @Test
