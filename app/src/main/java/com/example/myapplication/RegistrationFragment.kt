@@ -1,33 +1,34 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 
-class RegistrationActivity : AppCompatActivity() {
+class RegistrationFragment : Fragment(R.layout.registration_activity) {
 
     private lateinit var credentialsManager: CredentialsManager
+    private lateinit var emailEditText: EditText
+    private lateinit var passwordEditText: EditText
+    private lateinit var registerButton: Button
+    private lateinit var loginNextTextView: TextView
 
-    // Lazy initialization for views
-    private val emailEditText: EditText by lazy { findViewById(R.id.email_text) }
-    private val passwordEditText: EditText by lazy { findViewById(R.id.password_text) }
-    private val registerButton: Button by lazy { findViewById(R.id.nextButton) }
-    private val loginNextTextView: TextView by lazy { findViewById(R.id.login_next_text_view) }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.registration_activity)
-
-        credentialsManager = CredentialsManager(this)
+        credentialsManager = (activity as MainActivity).credentialsManager
+        emailEditText = view.findViewById(R.id.email_text)
+        passwordEditText = view.findViewById(R.id.password_text)
+        registerButton = view.findViewById(R.id.nextButton)
+        loginNextTextView = view.findViewById(R.id.login_next_text_view)
 
         registerButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
 
-            // Validation logic
+            // Validation logic for registration
             when {
                 !CredentialsManager.isValidEmail(email) -> {
                     emailEditText.error = "Invalid email format"
@@ -39,9 +40,7 @@ class RegistrationActivity : AppCompatActivity() {
                     emailEditText.error = "Email already registered"
                 }
                 credentialsManager.registerAccount(email, password) -> {
-                    // Successful registration
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    (activity as MainActivity).showLoginFragment() // Go back to login fragment after registration
                 }
                 else -> {
                     emailEditText.error = "Email already registered"
@@ -50,9 +49,8 @@ class RegistrationActivity : AppCompatActivity() {
         }
 
         loginNextTextView.setOnClickListener {
-            // Navigate to LoginActivity
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            (activity as MainActivity).showLoginFragment() // Go to login fragment
         }
     }
 }
+
