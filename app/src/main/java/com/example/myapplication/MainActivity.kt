@@ -2,33 +2,45 @@ package com.example.myapplication
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import com.example.myapplication.R
-import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
-    private var isFragmentAVisible = true
+    lateinit var credentialsManager: CredentialsManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set initial fragment
-        replaceFragment(FragmentA())
+        credentialsManager = CredentialsManager(this)
 
-        // Find the button using findViewById
-        val switchButton = findViewById<Button>(R.id.switchButton)
-        switchButton.setOnClickListener {
-            val nextFragment: Fragment = if (isFragmentAVisible) FragmentB() else FragmentA()
-            replaceFragment(nextFragment)
-            isFragmentAVisible = !isFragmentAVisible
+        if (savedInstanceState == null) {
+            showLoginFragment() // Show the login fragment by default
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+    // Method to show the LoginFragment
+    fun showLoginFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, LoginFragment())
+        transaction.addToBackStack(null) // Add to back stack to allow navigation
+        transaction.commit()
+    }
+
+    // Method to show the RegistrationFragment
+    fun showRegistrationFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, RegistrationFragment())
+        transaction.addToBackStack(null) // Add to back stack to allow navigation backwards
+        transaction.commit()
+    }
+
+    // Optional method to handle fragment back navigation manually
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if (fragment is LoginFragment) {
+            super.onBackPressed() // Let the system handle the back press
+        } else if (fragment is RegistrationFragment) {
+            showLoginFragment() // If in registration, go back to login without popping the back stack
+        }
     }
 }
