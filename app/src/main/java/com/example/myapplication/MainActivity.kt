@@ -34,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
+    fun showRecyclerViewFragment() {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, RecyclerViewFragment())
+        transaction.addToBackStack(null) // Allow back navigation
+        transaction.commit()
+    }
+
+
     // Optional method to handle fragment back navigation manually
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
