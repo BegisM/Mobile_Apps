@@ -35,13 +35,13 @@ class LoginFragment : Fragment(R.layout.login_activity) {
                     emailEditText.error = "Invalid email format"
                 }
                 credentialsManager.isValidAdminLogin(email, password) -> {
-                    navigateToMainActivity()
+                    navigateRecipeFragment()
                 }
                 !CredentialsManager.isValidPassword(password) -> {
                     passwordEditText.error = "Password must be at least 8 characters, with an uppercase letter and a digit"
                 }
                 credentialsManager.isValidLogin(email, password) -> {
-                    navigateToMainActivity()
+                    navigateRecipeFragment()
                 }
                 else -> {
                     passwordEditText.error = "Incorrect credentials"
@@ -54,8 +54,8 @@ class LoginFragment : Fragment(R.layout.login_activity) {
         }
     }
 
-    private fun navigateToMainActivity() {
-        (activity as MainActivity).showRegistrationFragment()
+    private fun navigateRecipeFragment() {
+        (activity as MainActivity).showRecyclerViewFragment()
     }
 }
 
